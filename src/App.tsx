@@ -1,13 +1,9 @@
 import { useState } from "react";
-import { Counter } from "./counter";
+import { Counter } from "./Counter";
 
 const App = () => {
-  const [counter, setCounter] = useState<number>(0)
-
   return (
     <div>
-      <Counter initCount={1} />
-      <Counter initCount={1} />
       <Counter initCount={1} />
     </div>
   )
