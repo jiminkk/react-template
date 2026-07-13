@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Counter } from "./Counter-tmp";
+import { Counter } from "./Counter";
 
 const App = () => {
   return (
