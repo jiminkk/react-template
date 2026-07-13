@@ -4,7 +4,7 @@ export const Counter = (props: { initCount: number }) => {
   const [counter, setCounter] = useState<number>(props.initCount);
 
   return (
-    <div>
+    <div className="px-1">
       <h1 className="text-l underline italic">Counter! </h1>
       <p className="text-xs">currently... {Math.max(counter, 0)}</p>
       <br />
