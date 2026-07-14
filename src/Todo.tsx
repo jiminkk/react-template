@@ -39,14 +39,22 @@ export const Todo = (props: { initialChecklist: Task[] }) => {
 
       <ul className="grid gap-1">
         {checklist.map((todo: Task, idx: number) => (
-          <li key={`${todo.createdAt}-${idx}`} className="flex text-sm">
+          <li key={`${todo.createdAt}-${idx}`} className="flex text-sm gap-1">
             <input
               type="checkbox"
-              className="appearance-none border w-5 h-5 mr-1 rounded-none checked:bg-orange-400"
+              className="appearance-none border w-5 h-5 rounded-none checked:bg-orange-400"
               onChange={() => toggleTaskCheck(idx)}
               checked={todo.completed}
             />
             <p>{todo.task}</p>
+            <button
+              className="ml-1"
+              onClick={() =>
+                setChecklist((prev) => prev.filter((_, i) => i !== idx))
+              }
+            >
+              x
+            </button>
           </li>
         ))}
       </ul>

@@ -1,4 +1,5 @@
 import { Counter } from "./Counter";
+import { TicTacToe } from "./Tic";
 import { Task, Todo } from "./Todo";
 
 const App = () => {
@@ -22,6 +23,10 @@ const App = () => {
       <div className="border-b-2 p-4 mb-4" />
 
       <Todo initialChecklist={initialTodoList} />
+
+      <div className="border-b-2 p-4 mb-4" />
+
+      <TicTacToe />
     </div>
   );
 };
