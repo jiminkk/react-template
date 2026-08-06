@@ -1,5 +1,7 @@
-const App = () => {
-  return <div></div>;
-};
+import SnakeGame from "./demo/SnakeGame"
 
-export default App;
+const App = () => {
+  return <SnakeGame />
+}
+
+export default App

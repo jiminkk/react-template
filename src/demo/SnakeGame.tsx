@@ -48,13 +48,18 @@ export default function App() {
     currLevel.current += 1
 
     const newApples: number[][] = []
+    const newAppleSet = new Set()
     Array.from({ length: currLevel.current }).forEach((v, i) => {
       // todo: make random positions valid, retry if invalid
-      const randomPosX = Math.floor(Math.random() * BOARD_SIZE)
-      const randomPosY = Math.floor(Math.random() * BOARD_SIZE)
-      newApples.push([randomPosX, randomPosY])
+      while (1) {
+        const randomPosX = Math.floor(Math.random() * BOARD_SIZE)
+        const randomPosY = Math.floor(Math.random() * BOARD_SIZE)
+        if (!newAppleSet.has([randomPosX, randomPosY])) {
+          newApples.push([randomPosX, randomPosY])
+          break
+        }
+      }
     })
-    // setApplePos(newApples)
     applePos.current = newApples
   }
 
@@ -74,16 +79,6 @@ export default function App() {
       }
     }
 
-    if (applePos.current.length < 1) {
-      if (currLevel.current === 3) {
-        setResult("complete")
-        clearInterval(intervalId.current ?? undefined)
-        return
-      } else {
-        levelUp()
-      }
-    }
-
     // check if first snake cell is in same cell as one of the apples
     for (let i = 0; i < applePos.current.length; i++) {
       if (
@@ -92,6 +87,16 @@ export default function App() {
       ) {
         applePos.current = applePos.current.filter((_, idx) => idx !== i)
         snakePos.current = [snakePos.current[0], ...snakePos.current]
+      }
+    }
+
+    if (applePos.current.length < 1) {
+      if (currLevel.current === 3) {
+        setResult("complete")
+        clearInterval(intervalId.current ?? undefined)
+        return
+      } else {
+        levelUp()
       }
     }
 
