@@ -38,18 +38,20 @@ export default function App() {
   const [result, setResult] = useState<
     "playing" | "paused" | "ko" | "complete"
   >("playing")
-  const currLevel = useRef<number>(1)
+  const currLevelRef = useRef<number>(1)
+  const [currLevel, setCurrLevel] = useState(1)
   const [tick, setTick] = useState<number>(0)
 
   const row = Array.from({ length: BOARD_SIZE }).fill(null) as []
   const matrix = Array.from({ length: BOARD_SIZE }).fill(row) as []
 
   function levelUp() {
-    currLevel.current += 1
+    currLevelRef.current += 1
+    setCurrLevel((prev) => prev + 1)
 
     const newApples: number[][] = []
     const newAppleSet = new Set()
-    Array.from({ length: currLevel.current }).forEach((v, i) => {
+    Array.from({ length: currLevelRef.current }).forEach((v, i) => {
       // todo: make random positions valid, retry if invalid
       while (1) {
         const randomPosX = Math.floor(Math.random() * BOARD_SIZE)
@@ -91,7 +93,7 @@ export default function App() {
     }
 
     if (applePos.current.length < 1) {
-      if (currLevel.current === 3) {
+      if (currLevelRef.current === 7) {
         setResult("complete")
         clearInterval(intervalId.current ?? undefined)
         return
@@ -143,13 +145,13 @@ export default function App() {
   }
 
   useEffect(() => {
-    const interval = setInterval(tickCallback, 500)
+    const interval = setInterval(tickCallback, 500 - 40 * currLevel)
     intervalId.current = interval
 
     return () => {
       clearInterval(interval)
     }
-  }, [])
+  }, [currLevel])
 
   useEffect(() => {
     document.addEventListener("keydown", (event) => {
@@ -202,6 +204,7 @@ export default function App() {
         </div>
       ))}
 
+      {currLevel}
       {result === "ko" ? <div>game over!!!</div> : null}
       {result === "complete" ? <div>great job! </div> : null}
     </div>
